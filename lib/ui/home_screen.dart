@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:winesvendor/ui/details.dart';
 
 import '../color/app_colors.dart';
 import '../model/data_model.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     myData = getCoffee();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,10 @@ class _HomePageState extends State<HomePage> {
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
               return Center(
-                child: Text("An error occured: ${snapshot.error.toString().split(':')[0]}", textAlign: TextAlign.center,),
+                child: Text(
+                  "An error occured: ${snapshot.error.toString().split(':')[0]}",
+                  textAlign: TextAlign.center,
+                ),
               );
             }
             if (!snapshot.hasData) {
@@ -55,6 +60,12 @@ class _HomePageState extends State<HomePage> {
                     return Card(
                       color: AppColors.lightColor,
                       child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>  DetailsPage(description: coffee[index].description, ingredients: coffee[index].ingredients, title: coffee[index].title,))));
+                        },
                         title: Text(
                           coffee[index].title,
                           style: const TextStyle(
@@ -62,24 +73,7 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        subtitle: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(coffee[index].description),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Chip(
-                                backgroundColor: AppColors.auditionColor,
-                                label: Text(coffee[index]
-                                    .ingredients
-                                    .toString()
-                                    .split('[')[1]
-                                    .split(']')[0]))
-                          ],
-                        ),
-                        isThreeLine: true,
+                        
                       ),
                     );
                   });

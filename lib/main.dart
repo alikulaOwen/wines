@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:winesvendor/ui/devs.dart';
 import 'package:winesvendor/ui/home_screen.dart';
 
@@ -47,7 +48,7 @@ class _WinesPageState extends State<WinesPage> {
   void launchEmail() async {
     String url = 'https://github.com/Karumaidoi/wines';
 
-    await canLaunch(url) ? launch(url) : print('Unable');
+    await canLaunchUrlString(url) ? launchUrlString(url) : print('Unable');
   }
 
   
